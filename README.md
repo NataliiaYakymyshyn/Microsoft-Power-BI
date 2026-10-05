@@ -12,7 +12,7 @@ POWER-BI/
 │   └── CODEOWNERS
 ├── .vscode/                       # TMDL extension + editor settings (VS Code / Cursor)
 ├── config/
-│   ├── environments/              # dev / uat / prod parameter values
+│   ├── environments/              # dev / prod parameter values
 │   └── bpa-rules.json             # (optional) custom BPA rules; default = Microsoft rules
 ├── docs/
 │   ├── CONTRIBUTING.md            # branching, commits, PR flow
@@ -55,7 +55,7 @@ Sales.Report/
    ```bash
    git clone https://github.com/NataliiaYakymyshyn/POWER-BI.git
    cd POWER-BI
-   git config merge.ours.driver true   # keeps env parameters on DEV→UAT→main merges
+   git config merge.ours.driver true   # keeps env parameters on DEV→main merges
    git config core.autocrlf false      # .gitattributes controls line endings
    ```
 3. Create / migrate a project: open the `.pbix` → **File → Save as → Power BI project (*.pbip)** → save into `src/` as `<Name>.pbip`. Do **not** commit the `.pbix`.
@@ -69,19 +69,18 @@ Sales.Report/
 | Close Desktop before `git pull` / switching branches | Desktop holds files in memory and overwrites them on save |
 | Edit TMDL in the editor only for bulk/text changes, then re-open in Desktop to validate | Desktop is the schema validator |
 | Never commit `.pbi/cache.abf`, `localSettings.json`, `.pbix` | Data, user settings, binaries |
-| Env-specific values only in Power Query parameters (`expressions.tmdl`) + `config/environments` | Same code on DEV / UAT / PROD |
+| Env-specific values only in Power Query parameters (`expressions.tmdl`) + `config/environments` | Same code on DEV / main |
 | Small PRs: one feature per branch | TMDL/PBIR diffs stay reviewable |
 
 ## Branching & deployment
 
 ```
-feature/* ──PR──▶ DEV ──PR──▶ UAT ──PR──▶ main
-                   │           │           │
-            [DEV] workspace  [UAT] ws   PROD workspace
+feature/* ──PR──▶ DEV ──PR──▶ main
+                   │           │
+            [DEV] workspace  [main] ws
 ```
 
 - `main` — production, protected (PR + review + green CI).
-- `UAT` — user acceptance, protected.
 - `DEV` — integration branch, default target for feature PRs.
 - `feature/<short-name>`, `fix/<short-name>` — short-lived work branches from `DEV`.
 
