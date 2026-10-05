@@ -1,0 +1,4 @@
+{
+  "BQ_Project": "<gcp-project-prod>",
+  "BQ_Dataset": "<dataset>"
+}

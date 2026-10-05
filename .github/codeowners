@@ -1,0 +1,6 @@
+# Default owner for everything
+*                         @NataliiaYakymyshyn
+
+# Semantic models require model-owner review
+/src/*.SemanticModel/     @NataliiaYakymyshyn
+/.github/                 @NataliiaYakymyshyn

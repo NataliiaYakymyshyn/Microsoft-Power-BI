@@ -1,0 +1,44 @@
+# Normalize line endings in the repo; Power BI Desktop writes CRLF on Windows
+* text=auto
+
+# PBIP text artifacts — keep CRLF in working tree to avoid noisy diffs from Desktop
+*.tmdl   text eol=crlf
+*.json   text eol=crlf
+*.pbip   text eol=crlf
+*.pbir   text eol=crlf
+*.pbism  text eol=crlf
+*.platform text eol=crlf
+*.dax    text eol=crlf
+*.m      text eol=crlf
+*.pq     text eol=crlf
+*.md     text eol=lf
+*.yml    text eol=lf
+*.yaml   text eol=lf
+*.ps1    text eol=crlf
+*.py     text eol=lf
+*.sh     text eol=lf
+
+# PBIP files are JSON — enable JSON-aware diffs
+*.pbip   linguist-language=JSON
+*.pbir   linguist-language=JSON
+*.pbism  linguist-language=JSON
+*.platform linguist-language=JSON
+
+# Binaries
+*.pbix   binary
+*.pbit   binary
+*.abf    binary
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.gif    binary
+*.svg    text
+*.ico    binary
+*.ttf    binary
+*.woff   binary
+*.woff2  binary
+
+# Environment-specific parameters: keep the target branch's version on merge
+# (DEV → UAT → main must not overwrite server/dataset parameters).
+# Requires once per clone:  git config merge.ours.driver true
+**/definition/expressions.tmdl merge=ours

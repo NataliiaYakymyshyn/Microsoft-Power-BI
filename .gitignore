@@ -1,0 +1,44 @@
+# ─── Power BI Project (PBIP) ─────────────────────────────────────────
+# User-specific settings and local data cache — never commit
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+**/.pbi/unappliedChanges.json
+
+# Binary report files: source of truth is PBIP, not PBIX
+*.pbix
+*.pbit
+!docs/**/*.pbit
+
+# Desktop temp / backup files
+*.pbix.bak
+~$*
+*.tmp
+
+# ─── Local secrets / environment overrides ──────────────────────────
+.env
+*.local.json
+config/environments/*.secret.json
+
+# ─── Tooling ────────────────────────────────────────────────────────
+# Tabular Editor / BPA local output
+TabularEditor*.zip
+_tools/
+bpa-results/
+*.trx
+
+# Python (helper scripts)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node
+node_modules/
+
+# ─── Editors / OS ───────────────────────────────────────────────────
+.vs/
+.idea/
+*.code-workspace
+.DS_Store
+Thumbs.db
+desktop.ini

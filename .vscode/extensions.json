@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "analysis-services.TMDL",
+    "GitHub.vscode-pull-request-github",
+    "EditorConfig.EditorConfig",
+    "redhat.vscode-yaml"
+  ]
+}

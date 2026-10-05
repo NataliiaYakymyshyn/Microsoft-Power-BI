@@ -1,0 +1,18 @@
+{
+  "files.associations": {
+    "*.pbip": "json",
+    "*.pbir": "json",
+    "*.pbism": "json",
+    "*.platform": "json"
+  },
+  "files.exclude": {
+    "**/.pbi/cache.abf": true
+  },
+  "search.exclude": {
+    "**/.pbi": true,
+    "**/StaticResources": true
+  },
+  "[tmdl]": {
+    "editor.insertSpaces": false
+  }
+}

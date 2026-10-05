@@ -1,0 +1,68 @@
+name: PBIP CI
+
+on:
+  pull_request:
+    branches: [DEV, main]
+    paths: ["src/**", ".github/workflows/pbip-ci.yml", "config/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  hygiene:
+    name: Repo hygiene & JSON validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Block forbidden files
+        run: |
+          bad=$(git ls-files | grep -E '(\.pbi/(localSettings\.json|cache\.abf)|\.pbix$|\.pbit$)' | grep -v '^docs/' || true)
+          if [ -n "$bad" ]; then
+            echo "::error::Forbidden files committed:"; echo "$bad"; exit 1
+          fi
+
+      - name: Validate JSON-based PBIP files
+        run: |
+          rc=0
+          while IFS= read -r -d '' f; do
+            python3 -m json.tool "$f" > /dev/null 2>&1 || { echo "::error file=$f::Invalid JSON"; rc=1; }
+          done < <(find src -type f \( -name '*.json' -o -name '*.pbip' -o -name '*.pbir' -o -name '*.pbism' -o -name '*.platform' \) -not -path '*/.pbi/*' -print0)
+          exit $rc
+
+      - name: Check thin reports use byPath (no embedded models)
+        run: |
+          for r in $(find src -name 'definition.pbir'); do
+            grep -q '"byPath"' "$r" || grep -q '"byConnection"' "$r" || { echo "::error file=$r::Report has no dataset reference"; exit 1; }
+          done
+
+  bpa:
+    name: Best Practice Analyzer (semantic models)
+    runs-on: windows-latest
+    needs: hygiene
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Tabular Editor 2 + BPA rules
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force _tools | Out-Null
+          Invoke-WebRequest "https://github.com/TabularEditor/TabularEditor/releases/latest/download/TabularEditor.Portable.zip" -OutFile _tools/te.zip
+          Expand-Archive _tools/te.zip -DestinationPath _tools/te -Force
+          if (Test-Path config/bpa-rules.json) { Copy-Item config/bpa-rules.json _tools/rules.json }
+          else { Invoke-WebRequest "https://raw.githubusercontent.com/microsoft/Analysis-Services/master/BestPracticeRules/BPARules.json" -OutFile _tools/rules.json }
+
+      - name: Run BPA on every *.SemanticModel
+        shell: pwsh
+        run: |
+          $models = Get-ChildItem src -Recurse -Filter definition.pbism | ForEach-Object { $_.Directory.FullName }
+          if (-not $models) { Write-Host "No semantic models found — skipping."; exit 0 }
+          $failed = $false
+          foreach ($m in $models) {
+            Write-Host "::group::BPA $m"
+            $p = Start-Process _tools/te/TabularEditor.exe -ArgumentList "`"$m`" -A `"_tools/rules.json`" -G" -NoNewWindow -Wait -PassThru
+            Write-Host "::endgroup::"
+            if ($p.ExitCode -ne 0) { $failed = $true }
+          }
+          if ($failed) { Write-Error "BPA found rule violations with severity Error"; exit 1 }
