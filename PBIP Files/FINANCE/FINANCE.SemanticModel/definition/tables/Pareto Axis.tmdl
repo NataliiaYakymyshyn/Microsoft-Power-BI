@@ -1,0 +1,51 @@
+table 'Pareto Axis'
+	lineageTag: 1f1415ed-ca26-45fb-81c6-fc4dbd33712f
+
+	column 'Pareto Axis Value'
+		lineageTag: f32aea3e-81a0-47ac-8a49-71aa22d2ddb0
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Parameter Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Parameter Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter Fields'
+		isHidden
+		lineageTag: bdec730f-6313-4049-b7b1-679b2adb06cd
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Parameter Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter Order'
+		isHidden
+		formatString: 0
+		lineageTag: 8e0eb780-19a7-4310-a83b-c0a503f39dad
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Pareto Axis' = calculated
+		mode: import
+		source =
+				
+				{
+				    ( "Product",     NAMEOF ( dim_product[Product] ),     0 ),
+				    ( "Country",     NAMEOF ( dim_country[Country] ),     1 ),
+				    ( "Segment",     NAMEOF ( dim_segment[Segment] ),     2 ),
+				    ( "Combination", NAMEOF ( fact_finance[Pareto Key] ), 3 )
+				}
+
+	annotation PBI_Id = 764b33b02113469880dcccab87c7c79c
+

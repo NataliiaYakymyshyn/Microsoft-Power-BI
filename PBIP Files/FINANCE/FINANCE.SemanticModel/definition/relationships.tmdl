@@ -1,0 +1,16 @@
+relationship AutoDetected_3807cf88-bc4e-4eef-94de-617bcac08a6f
+	fromColumn: fact_finance.ProductID
+	toColumn: dim_product.ProductID
+
+relationship AutoDetected_6fc7e2a1-2200-42a7-b8d6-7ac8760d7a3e
+	fromColumn: fact_finance.SegmentID
+	toColumn: dim_segment.SegmentID
+
+relationship AutoDetected_f8c1cc2d-8d20-47d3-9992-9fc2337dc7be
+	fromColumn: fact_finance.CountryID
+	toColumn: dim_country.CountryID
+
+relationship db0de2d5-7170-37e9-9031-29cc98b71c75
+	fromColumn: fact_finance.Date
+	toColumn: dim_calendar.Date
+

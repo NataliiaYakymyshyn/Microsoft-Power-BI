@@ -1,0 +1,467 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "fd7a2d8909180718b2be",
+  "position": {
+    "x": 21.5999755859375,
+    "y": 266.68573869977683,
+    "z": 5000,
+    "height": 190,
+    "width": 655.71428571428578,
+    "tabOrder": 6000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "HOW TO READ THIS CHART ",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "color": "#314245"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Pareto (80/20) analysis ranks items by the selected metric and shows how quickly they add up to the total. ",
+                    "textStyle": {
+                      "color": "#314245"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Bars show each item’s value; the line shows the cumulative share. ",
+                    "textStyle": {
+                      "color": "#314245"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "A",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "color": "#314245"
+                    }
+                  },
+                  {
+                    "value": " = items making up the first ",
+                    "textStyle": {
+                      "color": "#314245"
+                    }
+                  },
+                  {
+                    "value": "80%",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "color": "#314245"
+                    }
+                  },
+                  {
+                    "value": ", ",
+                    "textStyle": {
+                      "color": "#314245"
+                    }
+                  },
+                  {
+                    "value": "key contributors:",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "color": "#314245"
+                    }
+                  },
+                  {
+                    "value": " monitor closely, protect pricing, prioritize service and availability.",
+                    "textStyle": {
+                      "color": "#314245"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "B ",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "color": "#314245"
+                    }
+                  },
+                  {
+                    "value": "= the next ",
+                    "textStyle": {
+                      "color": "#314245"
+                    }
+                  },
+                  {
+                    "value": "15%",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "color": "#314245"
+                    }
+                  },
+                  {
+                    "value": ", ",
+                    "textStyle": {
+                      "color": "#314245"
+                    }
+                  },
+                  {
+                    "value": "secondary:",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "color": "#314245"
+                    }
+                  },
+                  {
+                    "value": " growth candidates; look for items close to the A threshold.",
+                    "textStyle": {
+                      "color": "#314245"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "C",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "color": "#314245"
+                    }
+                  },
+                  {
+                    "value": " = the tail",
+                    "textStyle": {
+                      "color": "#314245"
+                    }
+                  },
+                  {
+                    "value": ":",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "color": "#314245"
+                    }
+                  },
+                  {
+                    "value": " review cost-to-serve and discounts; candidates for simplification.",
+                    "textStyle": {
+                      "color": "#314245"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "The fewer items needed ",
+                    "textStyle": {
+                      "color": "#314245"
+                    }
+                  },
+                  {
+                    "value": "to reach 80%",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "color": "#314245"
+                    }
+                  },
+                  {
+                    "value": ", the more concentrated the metric.",
+                    "textStyle": {
+                      "color": "#314245"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 2,
+                      "Percent": 0.6
+                    }
+                  }
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "width": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "'15'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "'12'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "spacing": [
+        {
+          "properties": {
+            "customizeSpacing": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "verticalSpacing": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            },
+            "spaceBelowSubTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "16D"
+                }
+              }
+            },
+            "spaceAbovePlotArea": {
+              "expr": {
+                "Literal": {
+                  "Value": "16D"
+                }
+              }
+            },
+            "spaceAboveDivider": {
+              "expr": {
+                "Literal": {
+                  "Value": "16D"
+                }
+              }
+            },
+            "spaceAboveSubtitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "keepLayerOrder": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "preset": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Custom'"
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "86D"
+                }
+              }
+            },
+            "shadowSpread": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "shadowBlur": {
+              "expr": {
+                "Literal": {
+                  "Value": "3D"
+                }
+              }
+            },
+            "angle": {
+              "expr": {
+                "Literal": {
+                  "Value": "90D"
+                }
+              }
+            },
+            "shadowDistance": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

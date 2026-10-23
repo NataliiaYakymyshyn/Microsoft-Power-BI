@@ -1,0 +1,35 @@
+table LastRefresh
+	lineageTag: 2a6f52f0-50fe-4a70-8b83-85877cdb71bb
+
+	measure 'Footer Text' =
+			
+			VAR _Refresh =
+			    MAX ( LastRefresh[Last Refresh])
+			
+			RETURN
+			    "Last refreshed: " & FORMAT ( _Refresh, "dd MMM yyyy HH:mm" )
+			        & "   |   Created by: Natali Yakymyshyn"
+		lineageTag: abab9aeb-b46e-44e1-bcff-dc0400e452d0
+
+	column 'Last Refresh'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4860a428-cc47-4617-935e-e0b64367ae6b
+		summarizeBy: none
+		sourceColumn: Last Refresh
+
+		annotation SummarizationSetBy = Automatic
+
+	partition LastRefresh = m
+		mode: import
+		source =
+				let
+				    Source = #table(
+				        type table [Last Refresh = datetimezone],
+				        { { DateTimeZone.SwitchZone ( DateTimeZone.UtcNow (), 3 ) } }
+				    )
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

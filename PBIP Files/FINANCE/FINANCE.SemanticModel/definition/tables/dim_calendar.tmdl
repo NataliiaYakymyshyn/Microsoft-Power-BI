@@ -1,0 +1,95 @@
+table dim_calendar
+	lineageTag: df9258b4-c161-446a-8836-11a8b41de0a5
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: Long Date
+		lineageTag: e32637db-bfd5-4fcb-a851-25bb26c19756
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 8551c85d-6125-4570-9732-78fe3dae543f
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year-Month
+		dataType: string
+		lineageTag: 53409817-77eb-47ff-8142-c5a666e4f6bf
+		summarizeBy: none
+		sourceColumn: Year-Month
+		sortByColumn: YearMM
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMM
+		dataType: int64
+		formatString: 0
+		lineageTag: 6c75daaa-6cc8-4db1-bae3-de918e97d8eb
+		summarizeBy: none
+		sourceColumn: YearMM
+
+		annotation SummarizationSetBy = Automatic
+
+	column Q-Year
+		dataType: string
+		lineageTag: f0db1f07-81a7-49e6-98f4-ce8d8e39126a
+		summarizeBy: none
+		sourceColumn: Q-Year
+		sortByColumn: YearQQ
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearQQ
+		dataType: int64
+		formatString: 0
+		lineageTag: 87fe36c1-2648-4902-9312-eadf427dc6b5
+		summarizeBy: none
+		sourceColumn: YearQQ
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Year Hierarchy'
+		lineageTag: bac23eca-1db2-4664-a0f0-0d0696cbd5c9
+
+		level Year
+			lineageTag: c75156f9-6286-4dea-b0ff-6aef9c80662d
+			column: Year
+
+		level Q-Year
+			lineageTag: 5381b61a-5ddb-4f93-9b18-5544521c9ed4
+			column: Q-Year
+
+		level Year-Month
+			lineageTag: b63d7281-7111-4bf4-abe4-f536928f4468
+			column: Year-Month
+
+	partition dim_calendar = m
+		mode: import
+		source =
+				let
+				  Source = PowerPlatform.Dataflows([]),
+				  #"Navigation 1" = Source{[Id = "Workspaces"]}[Data],
+				  #"Navigation 2" = #"Navigation 1"{[workspaceId = "b4e22e88-f99b-4f21-afed-2363284c4068"]}[Data],
+				  #"Navigation 3" = #"Navigation 2"{[dataflowId = "68be96de-8aa3-48fc-a509-acb00466455a"]}[Data],
+				  #"Navigation 4" = #"Navigation 3"{[entity = "dim_calendar", version = ""]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(#"Navigation 4",{{"MMM-YYYY", "Year-Month"}})
+				in
+				  #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+

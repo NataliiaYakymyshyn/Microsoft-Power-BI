@@ -1,0 +1,35 @@
+table 'Pareto Class'
+	lineageTag: b14aa5a5-f672-4e6e-a546-8cc817de2d44
+
+	column Class
+		lineageTag: 9dfee353-da82-456e-9438-15880475a5e5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Class]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Class Order'
+		formatString: 0
+		lineageTag: cd5b1d20-c194-47c4-855f-a613a83fc2a9
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Class Order]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Pareto Class' = calculated
+		mode: import
+		source =
+				
+				DATATABLE (
+				    "Class", STRING, "Class Order", INTEGER,
+				    {
+				        { "A — top 80%",   1 },
+				        { "B — next 15%",  2 },
+				        { "C — tail 5%",   3 }
+				    }
+				)
+
+	annotation PBI_Id = ce674e0735d14323bac13b3cff20a225
+

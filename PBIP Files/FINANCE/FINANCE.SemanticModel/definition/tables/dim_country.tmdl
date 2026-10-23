@@ -1,0 +1,35 @@
+table dim_country
+	lineageTag: aa440207-34f0-4508-990e-d674ac89f166
+
+	column CountryID
+		dataType: int64
+		formatString: 0
+		lineageTag: 77d8bf2b-b044-4648-b824-eebcfe5a951d
+		summarizeBy: none
+		sourceColumn: CountryID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: f697374e-0a1e-4079-8a72-3d0781a40e61
+		dataCategory: Country
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_country = m
+		mode: import
+		source =
+				let
+				  Source = PowerPlatform.Dataflows([]),
+				  #"Navigation 1" = Source{[Id = "Workspaces"]}[Data],
+				  #"Navigation 2" = #"Navigation 1"{[workspaceId = "b4e22e88-f99b-4f21-afed-2363284c4068"]}[Data],
+				  #"Navigation 3" = #"Navigation 2"{[dataflowId = "68be96de-8aa3-48fc-a509-acb00466455a"]}[Data],
+				  #"Navigation 4" = #"Navigation 3"{[entity = "dim_country", version = ""]}[Data]
+				in
+				  #"Navigation 4"
+
+	annotation PBI_ResultType = Table
+

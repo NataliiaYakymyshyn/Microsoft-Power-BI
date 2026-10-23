@@ -1,0 +1,1081 @@
+table 'Finance Metrics'
+	lineageTag: 3a922956-d15d-4d60-9897-775004c7d145
+
+	measure 'Average Selling Price' = DIVIDE([Total Sales], [Units Sold])
+		formatString: \$#,0.0;(\$#,0.0);\$#,0.0
+		displayFolder: Operations
+		lineageTag: 15409ea0-af3f-462c-9948-2483dc9b13a6
+
+	measure 'Units Sold' = SUM('fact_finance'[UnitsSold])
+		formatString: #,0
+		displayFolder: Operations
+		lineageTag: 45301db1-c5eb-4d02-9e14-d5a07376c145
+
+	measure 'COGS % of Sales' = DIVIDE([Total COGS], [Total Sales])
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Profitability
+		lineageTag: 241af1dd-086c-4b3a-9ff4-217e2dab4280
+
+	measure 'Profit Margin' = DIVIDE([Total Profit], [Total Sales])
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Profitability
+		lineageTag: 8e4fa5df-fd5f-4b04-a645-cb627e2295a0
+
+	measure 'Total COGS' = SUM('fact_finance'[COGS])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Profitability
+		lineageTag: 3130f5f8-c8ae-4453-a139-7f10cae4cf5e
+
+	measure 'Total Profit' = SUM('fact_finance'[Profit])
+		formatString: \$#,0.0;(\$#,0.0);\$#,0.0
+		displayFolder: Profitability
+		lineageTag: 1b82ad80-23c8-4057-a51f-2eb5230b7777
+
+	measure 'Discount Rate' = DIVIDE([Total Discounts], [Gross Sales])
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Revenue
+		lineageTag: 14044488-ed3f-470a-9f92-abf513d270d1
+
+	measure 'Gross Sales' = SUM('fact_finance'[GrossSales])
+		formatString: \$#,0.0;(\$#,0.0);\$#,0.0
+		displayFolder: Revenue
+		lineageTag: 0ae9e3fb-bb92-41f6-8175-662bece63534
+
+	measure 'Total Discounts' = SUM('fact_finance'[Discounts])
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: Revenue
+		lineageTag: 0c5036de-68f0-4de9-bc28-abf969c414d0
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Total Sales' = SUM('fact_finance'[Sales])
+		formatString: \$#,0.0;(\$#,0.0);\$#,0.0
+		displayFolder: Revenue
+		lineageTag: f957c06a-680a-468f-8a21-0efd00126edd
+
+	measure 'Icon Sun' =
+			
+			VAR prefix ="data:image/svg+xml;utf8,"
+			VAR svg =
+			"<svg
+			  xmlns='http://www.w3.org/2000/svg'
+			  width='24'
+			  height='24'
+			  viewBox='0 0 24 24'
+			  fill='none'
+			  stroke='#F5F7FA'
+			  stroke-width='2'
+			  stroke-linecap='round'
+			  stroke-linejoin='round'
+			>
+			  <circle cx='12' cy='12' r='4' />
+			  <path d='M12 2v2' />
+			  <path d='M12 20v2' />
+			  <path d='m4.93 4.93 1.41 1.41' />
+			  <path d='m17.66 17.66 1.41 1.41' />
+			  <path d='M2 12h2' />
+			  <path d='M20 12h2' />
+			  <path d='m6.34 17.66-1.41 1.41' />
+			  <path d='m19.07 4.93-1.41 1.41' />
+			</svg>"
+			RETURN prefix&svg
+		displayFolder: ICONS
+		lineageTag: c3463b10-58ab-43b8-ac64-3556b8da1152
+		dataCategory: ImageUrl
+
+	measure 'Icon Moon' =
+			
+			VAR prefix ="data:image/svg+xml;utf8,"
+			VAR svg =
+			"<svg
+			  xmlns='http://www.w3.org/2000/svg'
+			  width='24'
+			  height='24'
+			  viewBox='0 0 24 24'
+			  fill='none'
+			  stroke='#1E293B'
+			  stroke-width='2'
+			  stroke-linecap='round'
+			  stroke-linejoin='round'
+			>
+			  <path d='M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401' />
+			</svg>"
+			RETURN
+			prefix&svg
+		displayFolder: ICONS
+		lineageTag: 86984cd2-6e7f-4d6c-bc41-1898288fb661
+		dataCategory: ImageUrl
+
+	measure 'Max Sales by Segment' =
+			
+			
+			MAXX (
+			    ALLSELECTED ( dim_segment[Segment] ),
+			    [Total Sales]
+			)
+		displayFolder: Best Sales
+		lineageTag: 9fd3e916-7966-4218-b8fa-a881733b03b6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Max Sales by Country' =
+			
+			
+			MAXX (
+			    ALLSELECTED ( dim_country[Country] ),
+			    [Total Sales]
+			)
+		displayFolder: Best Sales
+		lineageTag: 9b86f670-70fe-4d34-a351-5a34e7cad251
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Max Sales by Product' =
+			
+			
+			MAXX (
+			    ALLSELECTED ( dim_product[Product] ),
+			    [Total Sales]
+			)
+		displayFolder: Best Sales
+		lineageTag: 2cf5284e-6acf-4e39-bb02-cc86ce666a0b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'MAX selection' =
+			
+			var selection = SELECTEDVALUE('BAR CHART TOTAL SALES VIEW'[BAR CHART VIEW Order])
+			RETURN
+			SWITCH(TRUE(),
+			selection=0,[Max Sales by Segment],
+			selection=1,[Max Sales by Country],
+			selection=2,[Max Sales by Product])
+		displayFolder: Best Sales
+		lineageTag: 1a0f4314-9679-4416-9978-ef847d533303
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Title for Bar View' =
+			
+			var selection =  SELECTEDVALUE('BAR CHART TOTAL SALES VIEW'[BAR CHART VIEW Order])
+			RETURN
+			SWITCH(TRUE(),
+			selection=0,"Total Sales by Segment" ,
+			selection=1,"Total Sales by Country",
+			selection=2,"Total Sales by Product",BLANK())
+		displayFolder: UI/CF
+		lineageTag: 5ce97da3-8082-44d4-a4b1-122f7fecb1b7
+
+	measure 'Max Profit by Segment' =
+			
+			MAXX (
+			    ALLSELECTED ( dim_segment[Segment] ),
+			    [Total Profit]
+			)
+		displayFolder: Best Sales
+		lineageTag: 66b5b6fc-8118-41c0-a4bd-fef91ad0d754
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'CF Color for Profit' =
+			
+			IF([Total Profit]>=0,"#3D848F","#B10808")
+		displayFolder: UI/CF
+		lineageTag: ac834e67-3e83-49fc-b0fa-a1f77efb2d20
+
+	measure 'Dynamic Target Color' =
+			
+			IF([Profit Margin] > [Margin Target Value], "good")
+		displayFolder: UI/CF
+		lineageTag: ec62a801-2a39-4937-bba6-62001031c4e1
+
+	measure 'Text Label' =
+			
+			IF(
+					[Total Sales MoM %] > 0,
+					"🡩" & FORMAT(
+						[Total Sales MoM %],
+						" +0%"
+					),
+					"🡫" & FORMAT(
+						[Total Sales MoM %],
+						" 0%"
+					)
+				)
+		displayFolder: UI/CF
+		lineageTag: 71ddcc7e-2ec0-4bc7-86cd-19b09b8f5ca4
+
+	measure 'Total Sales MoM %' = ```
+			
+			VAR CurrentYearSales = [Total Sales]
+			VAR PreviousMonthSales = CALCULATE([Total Sales], PREVIOUSMONTH('dim_calendar'[Date]))
+			RETURN 
+			IF(NOT ISBLANK(PreviousMonthSales),
+			DIVIDE(CurrentYearSales,PreviousMonthSales)  -1)
+			
+			```
+		displayFolder: Revenue
+		lineageTag: 24bd5294-c99b-4be9-bf29-33ce4da277e7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Label Color' =
+			
+			IF([Total Sales MoM %]>0, "good", "bad")
+		displayFolder: UI/CF
+		lineageTag: 46c16987-156e-4de0-b721-440739900dec
+
+	measure 'Sales PY' = ```
+			CALCULATE ( [Total Sales], SAMEPERIODLASTYEAR ( 'dim_calendar'[Date] ) )
+			
+			```
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: Revenue\Ref
+		lineageTag: 2383edea-81ad-487e-82cf-667636f9d65d
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Sales YoY %' =
+			
+			VAR _cur = [Total Sales]
+			VAR _py  = [Sales PY]
+			RETURN IF ( NOT ISBLANK ( _py ), DIVIDE ( _cur - _py, _py ) )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Revenue\Ref
+		lineageTag: 4f16b4fb-d117-4e5c-83d7-91d155273cb9
+
+	measure 'Profit Margin PY' =
+			
+			CALCULATE ( [Profit Margin], SAMEPERIODLASTYEAR ( 'dim_calendar'[Date] ) )
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: Revenue\Ref
+		lineageTag: bd5255f3-6635-4033-9404-3686547f949c
+
+	measure 'Profit Margin Δ pp' =
+			
+			VAR _py = [Profit Margin PY]
+			RETURN IF ( NOT ISBLANK ( _py ), [Profit Margin] - _py )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Revenue\Ref
+		lineageTag: 909dc868-c5af-403c-a969-8192b442e971
+
+	measure 'Discounts %' = DIVIDE ( SUM ( fact_finance[Discounts] ), [Gross Sales] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Revenue\Ref
+		lineageTag: 1540badb-3bc4-4cbb-a2c1-8b71c1bb4c25
+
+	measure 'Avg List Price' = DIVIDE ( [Gross Sales], [Units Sold] )
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: Revenue\Ref
+		lineageTag: fdd4860f-20d4-42e0-9d9c-a6a0af7beb50
+
+	measure 'Profit per Unit' = DIVIDE ( [Total Profit], [Units Sold] )
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: Revenue\Ref
+		lineageTag: 2120f66c-acc7-481d-9b4a-c80c4b05cf3f
+
+	measure 'Units Share of Total' =
+			
+			DIVIDE (
+			    [Units Sold],
+			    CALCULATE ( [Units Sold], REMOVEFILTERS ( fact_finance[ProductID] ) )
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Revenue\Ref
+		lineageTag: 1c15ff2a-0af3-4ad9-a459-775849a60402
+
+	measure 'Gross Sales PY' =
+			
+			CALCULATE ( [Gross Sales], SAMEPERIODLASTYEAR ( 'dim_calendar'[Date] ) )
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Revenue\Ref
+		lineageTag: 5d9e4d12-0c09-4ad4-9246-8aa29f82cf5e
+
+	measure Discounts = SUM ( fact_finance[Discounts] )
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: Revenue\Ref
+		lineageTag: 45ec2468-4478-4730-b777-b4aa6b83ab10
+
+	measure 'Margin Threshold Low' =
+			
+			0.10
+		displayFolder: Product & Market
+		lineageTag: 280e0d5d-f5de-4526-b69e-f3ef9d4ed34f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin Threshold High' =
+			
+			0.20
+		displayFolder: Product & Market
+		lineageTag: 1c742fad-b243-4495-9ec9-c88510d3110a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin Target Tolerance' =
+			
+			0.05
+		displayFolder: Product & Market
+		lineageTag: 701c2680-5191-40c3-893f-16be93d95e37
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Profit Margin Band' =
+			
+			VAR _Margin = [Profit Margin]
+			VAR _Low    = [Margin Threshold Low]
+			VAR _High   = [Margin Threshold High]
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        ISBLANK ( _Margin ), BLANK (),
+			        _Margin < 0,         "Loss",
+			        _Margin < _Low,      "Low",
+			        _Margin < _High,     "Healthy",
+			                             "Strong"
+			    )
+		displayFolder: Product & Market
+		lineageTag: 6099ad5c-7a8e-404e-ba24-620ec8dd7218
+
+	measure 'Profit Margin Color' =
+			
+			SWITCH (
+			    [Profit Margin Band],
+			    "Loss",    "#C0392B",
+			    "Low",     "#F5B041",
+			    "Healthy", "#A9D18E",
+			    "Strong",  "#1E7B34"
+			)
+		displayFolder: Product & Market
+		lineageTag: d9648714-35ea-4d34-8934-238bffd6e176
+
+	measure 'Profit Margin Font Color' =
+			
+			VAR _Margin = [Profit Margin]
+			VAR _Low    = [Margin Threshold Low]
+			VAR _High   = [Margin Threshold High]
+			VAR _Band =
+			    SWITCH (
+			        TRUE (),
+			        ISBLANK ( _Margin ), BLANK (),
+			        _Margin < 0,         "Loss",
+			        _Margin < _Low,      "Low",
+			        _Margin < _High,     "Healthy",
+			                             "Strong"
+			    )
+			RETURN
+			SWITCH (
+			    _Band,
+			    "Loss",    "#FFFFFF",
+			    "Low",     "#000000",
+			    "Healthy", "#000000",
+			    "Strong",  "#FFFFFF"
+			)
+		displayFolder: Product & Market
+		lineageTag: 99a4ffb0-e169-4399-9bc9-98b34633eb2f
+
+	measure 'Profit Margin Icon' =
+			
+			VAR _Color = [Profit Margin Color]
+			VAR _Band  = [Profit Margin Band]
+			VAR _Shape =
+			    SWITCH (
+			        _Band,
+			        "Loss",    "<path d='M3 3 L13 13 M13 3 L3 13' stroke='" & _Color & "' stroke-width='2.5' stroke-linecap='round'/>",
+			        "Low",     "<polygon points='8,2 14,14 2,14' fill='" & _Color & "'/>",
+			        "Healthy", "<circle cx='8' cy='8' r='6' fill='" & _Color & "'/>",
+			        "Strong",  "<circle cx='8' cy='8' r='6' fill='" & _Color & "'/>"
+			    )
+			
+			RETURN
+			    IF (
+			        NOT ISBLANK ( _Band ),
+			        "data:image/svg+xml;utf8,"
+			            & "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'>"
+			            & _Shape
+			            & "</svg>"
+			    )
+		displayFolder: Product & Market
+		lineageTag: 76a1e0a8-e902-478c-8be9-249201299522
+		dataCategory: ImageUrl
+
+	measure 'Product Name' = IF(HASONEVALUE(dim_product[Product]),"Product: "&DISTINCT(dim_product[Product]))
+		displayFolder: Product & Market
+		lineageTag: 80089375-6efc-4f77-af1c-a32d7055bd6e
+
+	measure 'Best Country by Sales' =
+			
+			VAR _Top =
+			    TOPN (
+			        1,
+			        ALLSELECTED ( dim_country[Country] ),
+			        [Total Sales], DESC
+			    )
+			RETURN
+			    CONCATENATEX ( _Top, dim_country[Country], ", " )
+		displayFolder: Best Sales
+		lineageTag: 84ea7f75-198a-4f5c-9319-ac3a08373f27
+
+	measure 'Best Segment by Sales' =
+			
+			VAR _Top =
+			    TOPN (
+			        1,
+			        ALLSELECTED ( dim_segment[Segment] ),
+			        [Total Sales], DESC
+			    )
+			RETURN
+			    CONCATENATEX ( _Top, dim_segment[Segment], ", " )
+		displayFolder: Best Sales
+		lineageTag: 27bdb057-ce64-4861-9159-383c7c98eea1
+
+	measure 'Best sales by Country' = ```
+			
+			var _ranking = CALCULATE([Total Sales],KEEPFILTERS(TOPN(1,ALLSELECTED(dim_country[Country]),[Total Sales])))
+			return
+			_ranking
+			
+			```
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: Best Sales
+		lineageTag: a6476085-7872-4891-a708-e5ee25098391
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Best sales by Segment' = ```
+			
+			var _ranking = CALCULATE([Total Sales],KEEPFILTERS(TOPN(1,ALLSELECTED(dim_segment[Segment]),[Total Sales])))
+			return
+			_ranking
+			
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Best Sales
+		lineageTag: 304cbc29-3a4a-4ce9-aaff-4e48fcc1353d
+
+	measure 'Peak Month by Sales' =
+			
+			VAR _Months =
+			    ADDCOLUMNS (
+			        SUMMARIZE ( ALLSELECTED ( dim_calendar ), dim_calendar[Year-Month] ),
+			        "@Sales", [Total Sales]
+			    )
+			VAR _Top =
+			    TOPN (
+			        1,
+			        FILTER ( _Months, NOT ISBLANK ( [@Sales] ) ),
+			        [@Sales], DESC,
+			        dim_calendar[Year-Month], DESC     // tie-breaker: most recent
+			    )
+			RETURN
+			     MAXX ( _Top, dim_calendar[Year-Month] )
+		displayFolder: Best Sales
+		lineageTag: 86c4b733-ee54-45ca-bc54-4c1e33d13a90
+
+	measure 'Peak Month Sales' =
+			
+			VAR _Months =
+			    ADDCOLUMNS (
+			        SUMMARIZE ( ALLSELECTED ( dim_calendar ), dim_calendar[Year-Month] ),
+			        "@Sales", [Total Sales]
+			    )
+			RETURN
+			    MAXX ( _Months, [@Sales] )
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: Best Sales
+		lineageTag: 5f64ef01-6f01-4a76-b282-88aef5d333f4
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Lowest Sales by Country' =
+			
+			VAR _Top =
+			    TOPN (
+			        1,
+			        ALLSELECTED ( dim_country[Country] ),
+			        [Total Sales], ASC
+			    )
+			RETURN
+			    CONCATENATEX ( _Top, dim_country[Country], ", " )
+		displayFolder: Best Sales
+		lineageTag: 8ba773c1-e412-4697-a95f-0da88bcbcd82
+
+	measure 'Lowest Country Sales' =
+			
+			MINX (
+			    FILTER (
+			        ADDCOLUMNS ( ALLSELECTED ( dim_country[Country] ), "@Sales", [Total Sales] ),
+			        NOT ISBLANK ( [@Sales] )
+			    ),
+			    [@Sales]
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Best Sales
+		lineageTag: c82855ef-5ac6-4afc-b500-be8152583339
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Lowest Sales by Segment' =
+			
+			VAR _Top =
+			    TOPN (
+			        1,
+			        ALLSELECTED ( dim_segment[Segment] ),
+			        [Total Sales], ASC
+			    )
+			RETURN
+			    CONCATENATEX ( _Top, dim_segment[Segment] , ", " )
+		displayFolder: Best Sales
+		lineageTag: 0342d2f3-e7ba-4f00-b003-87fea5f1062c
+
+	measure 'Lowest Segment Sales' =
+			
+			MINX (
+			    FILTER (
+			        ADDCOLUMNS ( ALLSELECTED ( dim_segment[Segment] ), "@Sales", [Total Sales] ),
+			        NOT ISBLANK ( [@Sales] )
+			    ),
+			    [@Sales]
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Best Sales
+		lineageTag: e30ca87f-4eab-454d-8c03-b7c68bc9bae1
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Lowest Month Sales' =
+			
+			MINX (
+			    FILTER (
+			        ADDCOLUMNS ( ALLSELECTED ( dim_calendar[Year-Month] ), "@Sales", [Total Sales] ),
+			        NOT ISBLANK ( [@Sales] )
+			    ),
+			    [@Sales]
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Best Sales
+		lineageTag: 121d7ece-8a7b-43cd-ad86-086dd2195abd
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Lowest Sales by Month' =
+			
+			VAR _Months =
+			    ADDCOLUMNS (
+			        SUMMARIZE ( ALLSELECTED ( dim_calendar ), dim_calendar[Year-Month] ),
+			        "@Sales", [Total Sales]
+			    )
+			VAR _Top =
+			    TOPN (
+			        1,
+			        FILTER ( _Months, NOT ISBLANK ( [@Sales] ) ),
+			        [@Sales], ASC,
+			        dim_calendar[Year-Month], ASC     // tie-breaker: most recent
+			    )
+			RETURN
+			     MINX ( _Top, dim_calendar[Year-Month] )
+		displayFolder: Best Sales
+		lineageTag: a86b5e0e-8062-4e25-9cdc-1fc8fe1d484a
+
+	measure 'Max Profit Margin by Product' =
+			
+			
+			MAXX (
+			    ALLSELECTED ( dim_product[Product] ),
+			    [Profit Margin]
+			)
+		displayFolder: Best Sales
+		lineageTag: 42874114-225d-4e3b-99c7-02aba20bbe30
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Pareto Cumulative %' =
+			
+			VAR _Axis    = SELECTEDVALUE ( 'Pareto Axis'[Parameter Order], 3 )
+			VAR _Current = [Pareto Metric Value]
+			
+			VAR _ByProduct =
+			    VAR _Key   = SELECTEDVALUE ( dim_product[Product] )
+			    VAR _Items = ADDCOLUMNS ( ALLSELECTED ( dim_product[Product] ), "@V", [Pareto Metric Value] )
+			    RETURN
+			        DIVIDE (
+			            SUMX ( FILTER ( _Items, [@V] > _Current || ( [@V] = _Current && dim_product[Product] <= _Key ) ), [@V] ),
+			            SUMX ( _Items, [@V] )
+			        )
+			
+			VAR _ByCountry =
+			    VAR _Key   = SELECTEDVALUE ( dim_country[Country] )
+			    VAR _Items = ADDCOLUMNS ( ALLSELECTED ( dim_country[Country] ), "@V", [Pareto Metric Value] )
+			    RETURN
+			        DIVIDE (
+			            SUMX ( FILTER ( _Items, [@V] > _Current || ( [@V] = _Current && dim_country[Country] <= _Key ) ), [@V] ),
+			            SUMX ( _Items, [@V] )
+			        )
+			
+			VAR _BySegment =
+			    VAR _Key   = SELECTEDVALUE ( dim_segment[Segment] )
+			    VAR _Items = ADDCOLUMNS ( ALLSELECTED ( dim_segment[Segment] ), "@V", [Pareto Metric Value] )
+			    RETURN
+			        DIVIDE (
+			            SUMX ( FILTER ( _Items, [@V] > _Current || ( [@V] = _Current && dim_segment[Segment] <= _Key ) ), [@V] ),
+			            SUMX ( _Items, [@V] )
+			        )
+			
+			VAR _ByCombination =
+			    VAR _Key   = SELECTEDVALUE ( fact_finance[Pareto Key] )
+			    VAR _Items = ADDCOLUMNS ( ALLSELECTED ( fact_finance[Pareto Key] ), "@V", [Pareto Metric Value] )
+			    RETURN
+			        DIVIDE (
+			            SUMX ( FILTER ( _Items, [@V] > _Current || ( [@V] = _Current && fact_finance[Pareto Key] <= _Key ) ), [@V] ),
+			            SUMX ( _Items, [@V] )
+			        )
+			
+			RETURN
+			    IF (
+			        NOT ISBLANK ( _Current ),
+			        SWITCH ( _Axis, 0, _ByProduct, 1, _ByCountry, 2, _BySegment, _ByCombination )
+			    )
+			// Format: 0%
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Pareto
+		lineageTag: 06d313c6-07b7-482e-b2a9-bca5042f9548
+
+	measure 'Pareto Threshold' =
+			
+			0.8
+		displayFolder: Pareto
+		lineageTag: f0388a7a-fc7e-4c34-bacb-d584b75c14c6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Pareto Class Color' =
+			
+			VAR _Cum = [Pareto Cumulative %]
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        ISBLANK ( _Cum ), BLANK (),
+			        _Cum <= 0.80, "#2C3E50",
+			        _Cum <= 0.95, "#3F8E96",
+			                      "#BF9F74"
+			    )
+		displayFolder: Pareto
+		lineageTag: 88da209e-41da-432b-ac44-585e2204217e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Pareto Metric Value' =
+			
+			SWITCH (
+			    SELECTEDVALUE ( KPIs[Parameter Order], 0 ),
+			    0, [Total Sales],
+			    1, [Units Sold],
+			    2, [Total Discounts],
+			    3, [Total COGS]
+			)
+		displayFolder: Pareto
+		lineageTag: 62b56895-716d-4269-b442-9dd43d03da2e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Pareto Class' =
+			
+			VAR _Cum = [Pareto Cumulative %]
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        ISBLANK ( _Cum ), BLANK (),
+			        _Cum <= 0.80, "A",
+			        _Cum <= 0.95, "B",
+			                      "C"
+			    )
+		displayFolder: Pareto
+		lineageTag: ae3b17a2-a5ae-476a-b66d-e2fbf18b28bf
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Pareto Class Order' =
+			
+			VAR _Axis = SELECTEDVALUE ( 'Pareto Axis'[Parameter Order], 3 )
+			
+			VAR _ByProduct =
+			    VAR _Key   = SELECTEDVALUE ( dim_product[Product] )
+			    VAR _T     = FILTER ( ADDCOLUMNS ( ALLSELECTED ( dim_product[Product] ), "@V", [Pareto Metric Value] ), NOT ISBLANK ( [@V] ) )
+			    VAR _Total = SUMX ( _T, [@V] )
+			    VAR _TC =
+			        ADDCOLUMNS (
+			            _T,
+			            "@Cum",
+			                VAR _v = [@V] VAR _k = dim_product[Product]
+			                RETURN DIVIDE ( SUMX ( FILTER ( _T, [@V] > _v || ( [@V] = _v && dim_product[Product] <= _k ) ), [@V] ), _Total ),
+			            "@Prev",
+			                VAR _v = [@V] VAR _k = dim_product[Product]
+			                RETURN DIVIDE ( SUMX ( FILTER ( _T, [@V] > _v || ( [@V] = _v && dim_product[Product] < _k ) ), [@V] ), _Total ) + 0
+			        )
+			    VAR _TCl = ADDCOLUMNS ( _TC, "@Class", SWITCH ( TRUE (), [@Prev] < 0.80, 1, [@Prev] < 0.95, 2, 3 ) )
+			    RETURN MAXX ( FILTER ( _TCl, dim_product[Product] = _Key ), [@Class] )
+			
+			VAR _ByCountry =
+			    VAR _Key   = SELECTEDVALUE ( dim_country[Country] )
+			    VAR _T     = FILTER ( ADDCOLUMNS ( ALLSELECTED ( dim_country[Country] ), "@V", [Pareto Metric Value] ), NOT ISBLANK ( [@V] ) )
+			    VAR _Total = SUMX ( _T, [@V] )
+			    VAR _TC =
+			        ADDCOLUMNS (
+			            _T,
+			            "@Cum",
+			                VAR _v = [@V] VAR _k = dim_country[Country]
+			                RETURN DIVIDE ( SUMX ( FILTER ( _T, [@V] > _v || ( [@V] = _v && dim_country[Country] <= _k ) ), [@V] ), _Total ),
+			            "@Prev",
+			                VAR _v = [@V] VAR _k = dim_country[Country]
+			                RETURN DIVIDE ( SUMX ( FILTER ( _T, [@V] > _v || ( [@V] = _v && dim_country[Country] < _k ) ), [@V] ), _Total ) + 0
+			        )
+			    VAR _TCl = ADDCOLUMNS ( _TC, "@Class", SWITCH ( TRUE (), [@Prev] < 0.80, 1, [@Prev] < 0.95, 2, 3 ) )
+			    RETURN MAXX ( FILTER ( _TCl, dim_country[Country] = _Key ), [@Class] )
+			
+			VAR _BySegment =
+			    VAR _Key   = SELECTEDVALUE ( dim_segment[Segment] )
+			    VAR _T     = FILTER ( ADDCOLUMNS ( ALLSELECTED ( dim_segment[Segment] ), "@V", [Pareto Metric Value] ), NOT ISBLANK ( [@V] ) )
+			    VAR _Total = SUMX ( _T, [@V] )
+			    VAR _TC =
+			        ADDCOLUMNS (
+			            _T,
+			            "@Cum",
+			                VAR _v = [@V] VAR _k = dim_segment[Segment]
+			                RETURN DIVIDE ( SUMX ( FILTER ( _T, [@V] > _v || ( [@V] = _v && dim_segment[Segment] <= _k ) ), [@V] ), _Total ),
+			            "@Prev",
+			                VAR _v = [@V] VAR _k = dim_segment[Segment]
+			                RETURN DIVIDE ( SUMX ( FILTER ( _T, [@V] > _v || ( [@V] = _v && dim_segment[Segment] < _k ) ), [@V] ), _Total ) + 0
+			        )
+			    VAR _TCl = ADDCOLUMNS ( _TC, "@Class", SWITCH ( TRUE (), [@Prev] < 0.80, 1, [@Prev] < 0.95, 2, 3 ) )
+			    RETURN MAXX ( FILTER ( _TCl, dim_segment[Segment] = _Key ), [@Class] )
+			
+			VAR _ByCombination =
+			    VAR _Key   = SELECTEDVALUE ( fact_finance[Pareto Key] )
+			    VAR _T     = FILTER ( ADDCOLUMNS ( ALLSELECTED ( fact_finance[Pareto Key] ), "@V", [Pareto Metric Value] ), NOT ISBLANK ( [@V] ) )
+			    VAR _Total = SUMX ( _T, [@V] )
+			    VAR _TC =
+			        ADDCOLUMNS (
+			            _T,
+			            "@Cum",
+			                VAR _v = [@V] VAR _k = fact_finance[Pareto Key]
+			                RETURN DIVIDE ( SUMX ( FILTER ( _T, [@V] > _v || ( [@V] = _v && fact_finance[Pareto Key] <= _k ) ), [@V] ), _Total ),
+			            "@Prev",
+			                VAR _v = [@V] VAR _k = fact_finance[Pareto Key]
+			                RETURN DIVIDE ( SUMX ( FILTER ( _T, [@V] > _v || ( [@V] = _v && fact_finance[Pareto Key] < _k ) ), [@V] ), _Total ) + 0
+			        )
+			    VAR _TCl = ADDCOLUMNS ( _TC, "@Class", SWITCH ( TRUE (), [@Prev] < 0.80, 1, [@Prev] < 0.95, 2, 3 ) )
+			    RETURN MAXX ( FILTER ( _TCl, fact_finance[Pareto Key] = _Key ), [@Class] )
+			
+			RETURN
+			    SWITCH ( _Axis, 0, _ByProduct, 1, _ByCountry, 2, _BySegment, _ByCombination )
+		displayFolder: Pareto
+		lineageTag: 95850056-8bcb-4bc4-864e-616fc00ba7ac
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Key Insight' =
+			
+			VAR _Axis     = SELECTEDVALUE ( 'Pareto Axis'[Parameter Order], 3 )
+			VAR _MetricNo = SELECTEDVALUE ( KPIs[Parameter Order], 0 )
+			
+			VAR _AxisName =
+			    SWITCH ( _Axis, 0, "product", 1, "country", 2, "segment", "combination" )
+			VAR _Metric =
+			    SWITCH ( _MetricNo, 0, "Total Sales", 1, "Units Sold", 2, "Total Discounts", "Total COGS" )
+			
+			VAR _ByProduct =
+			    VAR _T     = FILTER ( ADDCOLUMNS ( ALLSELECTED ( dim_product[Product] ), "@V", [Pareto Metric Value] ), NOT ISBLANK ( [@V] ) )
+			    VAR _Total = SUMX ( _T, [@V] )
+			    VAR _TC =
+			        ADDCOLUMNS (
+			            _T,
+			            "@Cum",
+			                VAR _v = [@V] VAR _k = dim_product[Product]
+			                RETURN DIVIDE ( SUMX ( FILTER ( _T, [@V] > _v || ( [@V] = _v && dim_product[Product] <= _k ) ), [@V] ), _Total )
+			        )
+			    VAR _A   = FILTER ( _TC, [@Cum] <= 0.80 )
+			    VAR _Top = TOPN ( 1, _T, [@V], DESC, dim_product[Product], ASC )
+			    RETURN
+			        COUNTROWS ( _A ) + 0 & "|" & COUNTROWS ( _T ) + 0 & "|"
+			            & ROUND ( DIVIDE ( SUMX ( _A, [@V] ), _Total ) * 10000, 0 ) & "|"
+			            & ROUND ( DIVIDE ( MAXX ( _Top, [@V] ), _Total ) * 10000, 0 ) & "|"
+			            & MAXX ( _Top, dim_product[Product] )
+			
+			VAR _ByCountry =
+			    VAR _T     = FILTER ( ADDCOLUMNS ( ALLSELECTED ( dim_country[Country] ), "@V", [Pareto Metric Value] ), NOT ISBLANK ( [@V] ) )
+			    VAR _Total = SUMX ( _T, [@V] )
+			    VAR _TC =
+			        ADDCOLUMNS (
+			            _T,
+			            "@Cum",
+			                VAR _v = [@V] VAR _k = dim_country[Country]
+			                RETURN DIVIDE ( SUMX ( FILTER ( _T, [@V] > _v || ( [@V] = _v && dim_country[Country] <= _k ) ), [@V] ), _Total )
+			        )
+			    VAR _A   = FILTER ( _TC, [@Cum] <= 0.80 )
+			    VAR _Top = TOPN ( 1, _T, [@V], DESC, dim_country[Country], ASC )
+			    RETURN
+			        COUNTROWS ( _A ) + 0 & "|" & COUNTROWS ( _T ) + 0 & "|"
+			            & ROUND ( DIVIDE ( SUMX ( _A, [@V] ), _Total ) * 10000, 0 ) & "|"
+			            & ROUND ( DIVIDE ( MAXX ( _Top, [@V] ), _Total ) * 10000, 0 ) & "|"
+			            & MAXX ( _Top, dim_country[Country] )
+			
+			VAR _BySegment =
+			    VAR _T     = FILTER ( ADDCOLUMNS ( ALLSELECTED ( dim_segment[Segment] ), "@V", [Pareto Metric Value] ), NOT ISBLANK ( [@V] ) )
+			    VAR _Total = SUMX ( _T, [@V] )
+			    VAR _TC =
+			        ADDCOLUMNS (
+			            _T,
+			            "@Cum",
+			                VAR _v = [@V] VAR _k = dim_segment[Segment]
+			                RETURN DIVIDE ( SUMX ( FILTER ( _T, [@V] > _v || ( [@V] = _v && dim_segment[Segment] <= _k ) ), [@V] ), _Total )
+			        )
+			    VAR _A   = FILTER ( _TC, [@Cum] <= 0.80 )
+			    VAR _Top = TOPN ( 1, _T, [@V], DESC, dim_segment[Segment], ASC )
+			    RETURN
+			        COUNTROWS ( _A ) + 0 & "|" & COUNTROWS ( _T ) + 0 & "|"
+			            & ROUND ( DIVIDE ( SUMX ( _A, [@V] ), _Total ) * 10000, 0 ) & "|"
+			            & ROUND ( DIVIDE ( MAXX ( _Top, [@V] ), _Total ) * 10000, 0 ) & "|"
+			            & MAXX ( _Top, dim_segment[Segment] )
+			
+			VAR _ByCombination =
+			    VAR _T     = FILTER ( ADDCOLUMNS ( ALLSELECTED ( fact_finance[Pareto Key] ), "@V", [Pareto Metric Value] ), NOT ISBLANK ( [@V] ) )
+			    VAR _Total = SUMX ( _T, [@V] )
+			    VAR _TC =
+			        ADDCOLUMNS (
+			            _T,
+			            "@Cum",
+			                VAR _v = [@V] VAR _k = fact_finance[Pareto Key]
+			                RETURN DIVIDE ( SUMX ( FILTER ( _T, [@V] > _v || ( [@V] = _v && fact_finance[Pareto Key] <= _k ) ), [@V] ), _Total )
+			        )
+			    VAR _A   = FILTER ( _TC, [@Cum] <= 0.80 )
+			    VAR _Top = TOPN ( 1, _T, [@V], DESC, fact_finance[Pareto Key], ASC )
+			    RETURN
+			        COUNTROWS ( _A ) + 0 & "|" & COUNTROWS ( _T ) + 0 & "|"
+			            & ROUND ( DIVIDE ( SUMX ( _A, [@V] ), _Total ) * 10000, 0 ) & "|"
+			            & ROUND ( DIVIDE ( MAXX ( _Top, [@V] ), _Total ) * 10000, 0 ) & "|"
+			            & MAXX ( _Top, fact_finance[Pareto Key] )
+			
+			VAR _Packed =
+			    SWITCH ( _Axis, 0, _ByProduct, 1, _ByCountry, 2, _BySegment, _ByCombination )
+			
+			VAR _ClassA      = VALUE ( PATHITEM ( _Packed, 1 ) )
+			VAR _Items       = VALUE ( PATHITEM ( _Packed, 2 ) )
+			VAR _ValueShareA = VALUE ( PATHITEM ( _Packed, 3 ) ) / 10000
+			VAR _TopShare    = VALUE ( PATHITEM ( _Packed, 4 ) ) / 10000
+			VAR _TopName     = PATHITEM ( _Packed, 5 )
+			
+			VAR _ShareA = DIVIDE ( _ClassA, _Items )
+			
+			VAR _Level =
+			    SWITCH (
+			        TRUE (),
+			        _ClassA = 0,     "highly concentrated",
+			        _ShareA <= 0.30, "highly concentrated",
+			        _ShareA <= 0.50, "moderately concentrated",
+			                         "fairly evenly distributed"
+			    )
+			
+			VAR _Action =
+			    SWITCH (
+			        _MetricNo,
+			        0, "These are the key revenue drivers to protect.",
+			        1, "These items drive most of the volume.",
+			        2, "Discount policy review should start here.",
+			        3, "Cost-reduction efforts here have the biggest impact."
+			    )
+			
+			VAR _Core =
+			    IF (
+			        _ClassA = 0,
+			        "the top item alone accounts for " & FORMAT ( _TopShare, "0%" ) & " of the total. ",
+			        _ClassA & " of " & _Items & " items (" & FORMAT ( _ShareA, "0%" )
+			            & ") generate " & FORMAT ( _ValueShareA, "0%" ) & " of the total. "
+			    )
+			
+			RETURN
+			    IF (
+			        _Items > 0,
+			        _Metric & " is " & _Level & " by " & _AxisName & ": " & _Core
+			            & "Top item: " & _TopName & " (" & FORMAT ( _TopShare, "0.0%" ) & " of total). "
+			            & IF (
+			                _ClassA = 0 || _ShareA <= 0.50,
+			                _Action,
+			                "No small group dominates, so focus should be spread across items."
+			            )
+			    )
+		displayFolder: Pareto
+		lineageTag: 44bfebf1-3c9f-4de2-8424-7a9c4d00e5f2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'ABC Card Value' =
+			
+			VAR _Axis  = SELECTEDVALUE ( 'Pareto Axis'[Parameter Order], 3 )
+			VAR _Class = SELECTEDVALUE ( 'Pareto Class'[Class Order] )
+			
+			VAR _ByProduct =
+			    VAR _T     = FILTER ( ADDCOLUMNS ( ALLSELECTED ( dim_product[Product] ), "@V", [Pareto Metric Value] ), NOT ISBLANK ( [@V] ) )
+			    VAR _Total = SUMX ( _T, [@V] )
+			    VAR _TC =
+			        ADDCOLUMNS (
+			            _T,
+			            "@Cum",
+			                VAR _v = [@V] VAR _k = dim_product[Product]
+			                RETURN DIVIDE ( SUMX ( FILTER ( _T, [@V] > _v || ( [@V] = _v && dim_product[Product] <= _k ) ), [@V] ), _Total )
+			        )
+			    VAR _TCl = ADDCOLUMNS ( _TC, "@Class", SWITCH ( TRUE (), [@Cum] <= 0.80, 1, [@Cum] <= 0.95, 2, 3 ) )
+			    RETURN COUNTROWS ( FILTER ( _TCl, [@Class] = _Class ) )
+			
+			VAR _ByCountry =
+			    VAR _T     = FILTER ( ADDCOLUMNS ( ALLSELECTED ( dim_country[Country] ), "@V", [Pareto Metric Value] ), NOT ISBLANK ( [@V] ) )
+			    VAR _Total = SUMX ( _T, [@V] )
+			    VAR _TC =
+			        ADDCOLUMNS (
+			            _T,
+			            "@Cum",
+			                VAR _v = [@V] VAR _k = dim_country[Country]
+			                RETURN DIVIDE ( SUMX ( FILTER ( _T, [@V] > _v || ( [@V] = _v && dim_country[Country] <= _k ) ), [@V] ), _Total )
+			        )
+			    VAR _TCl = ADDCOLUMNS ( _TC, "@Class", SWITCH ( TRUE (), [@Cum] <= 0.80, 1, [@Cum] <= 0.95, 2, 3 ) )
+			    RETURN COUNTROWS ( FILTER ( _TCl, [@Class] = _Class ) )
+			
+			VAR _BySegment =
+			    VAR _T     = FILTER ( ADDCOLUMNS ( ALLSELECTED ( dim_segment[Segment] ), "@V", [Pareto Metric Value] ), NOT ISBLANK ( [@V] ) )
+			    VAR _Total = SUMX ( _T, [@V] )
+			    VAR _TC =
+			        ADDCOLUMNS (
+			            _T,
+			            "@Cum",
+			                VAR _v = [@V] VAR _k = dim_segment[Segment]
+			                RETURN DIVIDE ( SUMX ( FILTER ( _T, [@V] > _v || ( [@V] = _v && dim_segment[Segment] <= _k ) ), [@V] ), _Total )
+			        )
+			    VAR _TCl = ADDCOLUMNS ( _TC, "@Class", SWITCH ( TRUE (), [@Cum] <= 0.80, 1, [@Cum] <= 0.95, 2, 3 ) )
+			    RETURN COUNTROWS ( FILTER ( _TCl, [@Class] = _Class ) )
+			
+			VAR _ByCombination =
+			    VAR _T     = FILTER ( ADDCOLUMNS ( ALLSELECTED ( fact_finance[Pareto Key] ), "@V", [Pareto Metric Value] ), NOT ISBLANK ( [@V] ) )
+			    VAR _Total = SUMX ( _T, [@V] )
+			    VAR _TC =
+			        ADDCOLUMNS (
+			            _T,
+			            "@Cum",
+			                VAR _v = [@V] VAR _k = fact_finance[Pareto Key]
+			                RETURN DIVIDE ( SUMX ( FILTER ( _T, [@V] > _v || ( [@V] = _v && fact_finance[Pareto Key] <= _k ) ), [@V] ), _Total )
+			        )
+			    VAR _TCl = ADDCOLUMNS ( _TC, "@Class", SWITCH ( TRUE (), [@Cum] <= 0.80, 1, [@Cum] <= 0.95, 2, 3 ) )
+			    RETURN COUNTROWS ( FILTER ( _TCl, [@Class] = _Class ) )
+			
+			RETURN
+			    ( SWITCH ( _Axis, 0, _ByProduct, 1, _ByCountry, 2, _BySegment, _ByCombination ) + 0 ) & " items"
+		displayFolder: Pareto
+		lineageTag: 7868858c-6d5d-415f-a034-dd24a85d3385
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'ABC Card Detail' =
+			
+			VAR _Axis  = SELECTEDVALUE ( 'Pareto Axis'[Parameter Order], 3 )
+			VAR _Class = SELECTEDVALUE ( 'Pareto Class'[Class Order] )
+			
+			VAR _ByProduct =
+			    VAR _T     = FILTER ( ADDCOLUMNS ( ALLSELECTED ( dim_product[Product] ), "@V", [Pareto Metric Value] ), NOT ISBLANK ( [@V] ) )
+			    VAR _Total = SUMX ( _T, [@V] )
+			    VAR _TC =
+			        ADDCOLUMNS (
+			            _T,
+			            "@Cum",
+			                VAR _v = [@V] VAR _k = dim_product[Product]
+			                RETURN DIVIDE ( SUMX ( FILTER ( _T, [@V] > _v || ( [@V] = _v && dim_product[Product] <= _k ) ), [@V] ), _Total )
+			        )
+			    VAR _TCl     = ADDCOLUMNS ( _TC, "@Class", SWITCH ( TRUE (), [@Cum] <= 0.80, 1, [@Cum] <= 0.95, 2, 3 ) )
+			    VAR _InClass = FILTER ( _TCl, [@Class] = _Class )
+			    RETURN
+			        FORMAT ( DIVIDE ( COUNTROWS ( _InClass ), COUNTROWS ( _T ) ) + 0, "0%" ) & " of items · "
+			            & FORMAT ( DIVIDE ( SUMX ( _InClass, [@V] ), _Total ) + 0, "0%" ) & " of value"
+			
+			VAR _ByCountry =
+			    VAR _T     = FILTER ( ADDCOLUMNS ( ALLSELECTED ( dim_country[Country] ), "@V", [Pareto Metric Value] ), NOT ISBLANK ( [@V] ) )
+			    VAR _Total = SUMX ( _T, [@V] )
+			    VAR _TC =
+			        ADDCOLUMNS (
+			            _T,
+			            "@Cum",
+			                VAR _v = [@V] VAR _k = dim_country[Country]
+			                RETURN DIVIDE ( SUMX ( FILTER ( _T, [@V] > _v || ( [@V] = _v && dim_country[Country] <= _k ) ), [@V] ), _Total )
+			        )
+			    VAR _TCl     = ADDCOLUMNS ( _TC, "@Class", SWITCH ( TRUE (), [@Cum] <= 0.80, 1, [@Cum] <= 0.95, 2, 3 ) )
+			    VAR _InClass = FILTER ( _TCl, [@Class] = _Class )
+			    RETURN
+			        FORMAT ( DIVIDE ( COUNTROWS ( _InClass ), COUNTROWS ( _T ) ) + 0, "0%" ) & " of items · "
+			            & FORMAT ( DIVIDE ( SUMX ( _InClass, [@V] ), _Total ) + 0, "0%" ) & " of value"
+			
+			VAR _BySegment =
+			    VAR _T     = FILTER ( ADDCOLUMNS ( ALLSELECTED ( dim_segment[Segment] ), "@V", [Pareto Metric Value] ), NOT ISBLANK ( [@V] ) )
+			    VAR _Total = SUMX ( _T, [@V] )
+			    VAR _TC =
+			        ADDCOLUMNS (
+			            _T,
+			            "@Cum",
+			                VAR _v = [@V] VAR _k = dim_segment[Segment]
+			                RETURN DIVIDE ( SUMX ( FILTER ( _T, [@V] > _v || ( [@V] = _v && dim_segment[Segment] <= _k ) ), [@V] ), _Total )
+			        )
+			    VAR _TCl     = ADDCOLUMNS ( _TC, "@Class", SWITCH ( TRUE (), [@Cum] <= 0.80, 1, [@Cum] <= 0.95, 2, 3 ) )
+			    VAR _InClass = FILTER ( _TCl, [@Class] = _Class )
+			    RETURN
+			        FORMAT ( DIVIDE ( COUNTROWS ( _InClass ), COUNTROWS ( _T ) ) + 0, "0%" ) & " of items · "
+			            & FORMAT ( DIVIDE ( SUMX ( _InClass, [@V] ), _Total ) + 0, "0%" ) & " of value"
+			
+			VAR _ByCombination =
+			    VAR _T     = FILTER ( ADDCOLUMNS ( ALLSELECTED ( fact_finance[Pareto Key] ), "@V", [Pareto Metric Value] ), NOT ISBLANK ( [@V] ) )
+			    VAR _Total = SUMX ( _T, [@V] )
+			    VAR _TC =
+			        ADDCOLUMNS (
+			            _T,
+			            "@Cum",
+			                VAR _v = [@V] VAR _k = fact_finance[Pareto Key]
+			                RETURN DIVIDE ( SUMX ( FILTER ( _T, [@V] > _v || ( [@V] = _v && fact_finance[Pareto Key] <= _k ) ), [@V] ), _Total )
+			        )
+			    VAR _TCl     = ADDCOLUMNS ( _TC, "@Class", SWITCH ( TRUE (), [@Cum] <= 0.80, 1, [@Cum] <= 0.95, 2, 3 ) )
+			    VAR _InClass = FILTER ( _TCl, [@Class] = _Class )
+			    RETURN
+			        FORMAT ( DIVIDE ( COUNTROWS ( _InClass ), COUNTROWS ( _T ) ) + 0, "0%" ) & " of items · "
+			            & FORMAT ( DIVIDE ( SUMX ( _InClass, [@V] ), _Total ) + 0, "0%" ) & " of value"
+			
+			RETURN
+			    SWITCH ( _Axis, 0, _ByProduct, 1, _ByCountry, 2, _BySegment, _ByCombination )
+		displayFolder: Pareto
+		lineageTag: 8f1872c3-646c-4378-b2b9-14a5320b0738
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'ABC Card Color' = ```
+			
+			SWITCH (
+			    SELECTEDVALUE ( 'Pareto Class'[Class Order] ),
+			    1, "#2C3E50",
+			    2, "#3F8E96",
+			    3, "#BF9F74"
+			)
+			
+			```
+		displayFolder: Pareto
+		lineageTag: 3ec2564a-b492-4f33-91ee-b936dfcb85b3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Placeholder
+		isHidden
+		formatString: 0
+		lineageTag: 24fc8867-63f0-4d4d-8665-57cc4e1cb436
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Placeholder]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Finance Metrics' = calculated
+		mode: import
+		source = ROW("Placeholder", BLANK())
+
+	annotation PBI_Id = 4f68c4f423e642dc827d1e8ce7da72c5
+

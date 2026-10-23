@@ -1,0 +1,50 @@
+table KPIs
+	lineageTag: 13092bcd-f536-4621-afec-6333d83182a8
+
+	column KPIs
+		lineageTag: 0269ad12-9dd7-4fe6-8856-be33bfa17e6a
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Parameter Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Parameter Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter Fields'
+		isHidden
+		lineageTag: 6e17efd2-6bd8-4be1-a61f-2522998bc4b6
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Parameter Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter Order'
+		isHidden
+		formatString: 0
+		lineageTag: 6026d534-4a1a-47f5-9264-51fcad6f74cb
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition KPIs = calculated
+		mode: import
+		source =
+				{
+				    ("Total Sales", NAMEOF('Finance Metrics'[Total Sales]), 0),
+				    ("Units Sold", NAMEOF('Finance Metrics'[Units Sold]), 1),
+				    ("Total Discounts", NAMEOF('Finance Metrics'[Total Discounts]), 2),
+				    ("Total COGS", NAMEOF('Finance Metrics'[Total COGS]), 3)
+				}
+
+	annotation PBI_Id = 864d94ac1aa44bf1a76b29850f4f13e8
+

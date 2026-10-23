@@ -1,0 +1,34 @@
+table dim_segment
+	lineageTag: 9fc0ee58-0a2c-4e14-961a-46db511a63c8
+
+	column SegmentID
+		dataType: int64
+		formatString: 0
+		lineageTag: 7529a651-12f8-4c79-aa28-2277b13cf5ff
+		summarizeBy: none
+		sourceColumn: SegmentID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Segment
+		dataType: string
+		lineageTag: f7015dad-d138-4d08-8043-9f98ad12576c
+		summarizeBy: none
+		sourceColumn: Segment
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_segment = m
+		mode: import
+		source =
+				let
+				  Source = PowerPlatform.Dataflows([]),
+				  #"Navigation 1" = Source{[Id = "Workspaces"]}[Data],
+				  #"Navigation 2" = #"Navigation 1"{[workspaceId = "b4e22e88-f99b-4f21-afed-2363284c4068"]}[Data],
+				  #"Navigation 3" = #"Navigation 2"{[dataflowId = "68be96de-8aa3-48fc-a509-acb00466455a"]}[Data],
+				  #"Navigation 4" = #"Navigation 3"{[entity = "dim_segment", version = ""]}[Data]
+				in
+				  #"Navigation 4"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,48 @@
+table 'PnL Steps'
+	lineageTag: e099e6b1-103c-4317-a86b-3f059296531b
+
+	measure 'PnL Bridge Value' =
+			
+			SWITCH (
+			    SELECTEDVALUE ( 'PnL Steps'[Step] ),
+			    "Gross Sales",  [Gross Sales],
+			    "Discounts",   -[Total Discounts],
+			    "COGS",        -[Total COGS]
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 87489f13-03bf-4053-b16c-727049202999
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Step
+		lineageTag: 688198e9-aa8e-4032-b939-b8929e139690
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Step]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Order
+		formatString: 0
+		lineageTag: 7f513d5f-ccdb-4e09-ae3c-5d9bf38a997a
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Order]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PnL Steps' = calculated
+		mode: import
+		source =
+				
+				DATATABLE (
+				    "Step", STRING, "Order", INTEGER,
+				    {
+				        { "Gross Sales", 1 },
+				        { "Discounts",   2 },
+				        { "COGS",        3 }
+				    }
+				)
+
+	annotation PBI_Id = 5f069f74e2914dcbb52ae04b1d031e63
+

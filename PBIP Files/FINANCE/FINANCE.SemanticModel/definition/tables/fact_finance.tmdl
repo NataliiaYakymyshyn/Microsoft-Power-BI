@@ -1,0 +1,174 @@
+table fact_finance
+	lineageTag: 6d5581a6-d05c-4eff-b68f-6f5808afeb68
+
+	column SegmentID
+		dataType: int64
+		formatString: 0
+		lineageTag: d65bc7b5-299a-4a1d-874d-a43553aef4c3
+		summarizeBy: none
+		sourceColumn: SegmentID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CountryID
+		dataType: int64
+		formatString: 0
+		lineageTag: 3dc83b8b-6f63-4fbe-a7e4-f85f14f422f9
+		summarizeBy: none
+		sourceColumn: CountryID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductID
+		dataType: int64
+		formatString: 0
+		lineageTag: 2cd36abc-69fc-4bc0-bf03-3226fbfc3e0f
+		summarizeBy: none
+		sourceColumn: ProductID
+
+		annotation SummarizationSetBy = Automatic
+
+	column DiscountBand
+		dataType: string
+		lineageTag: 36593e4c-121d-4224-8b26-cf9ec4f07fa2
+		summarizeBy: none
+		sourceColumn: DiscountBand
+		sortByColumn: DiscountBandOrder
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitsSold
+		dataType: double
+		formatString: #,0
+		lineageTag: b5cf3028-33b8-497c-aace-8a55fea8d2ac
+		summarizeBy: sum
+		sourceColumn: UnitsSold
+
+		annotation SummarizationSetBy = Automatic
+
+	column ManufacturingPrice
+		dataType: double
+		formatString: "£"#,0.###############;-"£"#,0.###############;"£"#,0.###############
+		lineageTag: 80356b7a-0119-4da3-adfa-265c745e1616
+		summarizeBy: sum
+		sourceColumn: ManufacturingPrice
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	column SalePrice
+		dataType: double
+		formatString: "£"#,0.###############;-"£"#,0.###############;"£"#,0.###############
+		lineageTag: deae566a-1574-4ff1-b36a-1ff9f3899b1c
+		summarizeBy: sum
+		sourceColumn: SalePrice
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	column GrossSales
+		dataType: double
+		formatString: "£"#,0.###############;-"£"#,0.###############;"£"#,0.###############
+		lineageTag: e93a0509-a98a-4546-aaf4-512ca683a105
+		summarizeBy: sum
+		sourceColumn: GrossSales
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	column Discounts
+		dataType: double
+		formatString: #,0.00%;-#,0.00%;#,0.00%
+		lineageTag: daa2df67-efb5-49a4-8000-578898f46f9c
+		summarizeBy: sum
+		sourceColumn: Discounts
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sales
+		dataType: double
+		formatString: "£"#,0.###############;-"£"#,0.###############;"£"#,0.###############
+		lineageTag: b1c97387-144a-4c73-9c50-2fca82e6788a
+		summarizeBy: sum
+		sourceColumn: Sales
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	column COGS
+		dataType: double
+		formatString: "£"#,0.###############;-"£"#,0.###############;"£"#,0.###############
+		lineageTag: 2ebf02ec-6681-4276-828c-60ff3c0034ca
+		summarizeBy: sum
+		sourceColumn: COGS
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	column Profit
+		dataType: double
+		formatString: "£"#,0.###############;-"£"#,0.###############;"£"#,0.###############
+		lineageTag: 9b50a6b2-ce11-4aad-bf5f-bf4b2c4e5e26
+		summarizeBy: sum
+		sourceColumn: Profit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 6096aa98-aa3c-496f-9943-8f941a3930cf
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column DiscountBandOrder
+		dataType: int64
+		formatString: 0
+		lineageTag: 35049715-bf39-4cb6-9ecc-3c4f9a07b8d1
+		summarizeBy: sum
+		sourceColumn: DiscountBandOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Pareto Key' =
+			
+			RELATED ( dim_segment[Segment] ) & " · "
+			    & RELATED ( dim_country[Country] ) & " · "
+			    & RELATED ( dim_product[Product] )
+		lineageTag: 50f11572-7c70-426b-a37e-f72859038331
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_finance = m
+		mode: import
+		source =
+				let
+				  Source = PowerPlatform.Dataflows([]),
+				  #"Navigation 1" = Source{[Id = "Workspaces"]}[Data],
+				  #"Navigation 2" = #"Navigation 1"{[workspaceId = "b4e22e88-f99b-4f21-afed-2363284c4068"]}[Data],
+				  #"Navigation 3" = #"Navigation 2"{[dataflowId = "68be96de-8aa3-48fc-a509-acb00466455a"]}[Data],
+				  #"Navigation 4" = #"Navigation 3"{[entity = "fact_finance", version = ""]}[Data],
+				  #"Replaced value" = Table.ReplaceValue(#"Navigation 4", null, "None", Replacer.ReplaceValue, {"DiscountBand"}),
+				  #"Added custom" = Table.TransformColumnTypes(Table.AddColumn(#"Replaced value", "DiscountBandOrder", each if [DiscountBand]="None" then 1
+				else if [DiscountBand]="Low" then 2
+				else if [DiscountBand]="Medium" then 3
+				else 4), {{"DiscountBandOrder", Int64.Type}})
+				in
+				  #"Added custom"
+
+	annotation PBI_ResultType = Table
+

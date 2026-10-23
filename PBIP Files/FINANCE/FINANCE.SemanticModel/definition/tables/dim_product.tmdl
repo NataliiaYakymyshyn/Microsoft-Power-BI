@@ -1,0 +1,34 @@
+table dim_product
+	lineageTag: 1ffd0282-d207-467e-80bd-792bca3dc508
+
+	column ProductID
+		dataType: int64
+		formatString: 0
+		lineageTag: 745b8c88-48ad-4a84-8884-f0bb9fc5d554
+		summarizeBy: none
+		sourceColumn: ProductID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product
+		dataType: string
+		lineageTag: 89459190-e625-4bd2-b7a3-98e1a6a130c1
+		summarizeBy: none
+		sourceColumn: Product
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_product = m
+		mode: import
+		source =
+				let
+				  Source = PowerPlatform.Dataflows([]),
+				  #"Navigation 1" = Source{[Id = "Workspaces"]}[Data],
+				  #"Navigation 2" = #"Navigation 1"{[workspaceId = "b4e22e88-f99b-4f21-afed-2363284c4068"]}[Data],
+				  #"Navigation 3" = #"Navigation 2"{[dataflowId = "68be96de-8aa3-48fc-a509-acb00466455a"]}[Data],
+				  #"Navigation 4" = #"Navigation 3"{[entity = "dim_product", version = ""]}[Data]
+				in
+				  #"Navigation 4"
+
+	annotation PBI_ResultType = Table
+

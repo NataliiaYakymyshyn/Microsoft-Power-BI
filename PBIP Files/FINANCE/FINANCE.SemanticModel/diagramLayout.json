@@ -1,0 +1,197 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 796.2900717221919,
+            "y": 0
+          },
+          "nodeIndex": "dim_calendar",
+          "nodeLineageTag": "df9258b4-c161-446a-8836-11a8b41de0a5",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": -50
+          },
+          "nodeIndex": "dim_country",
+          "nodeLineageTag": "aa440207-34f0-4508-990e-d674ac89f166",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 542.2900717221919,
+            "y": 157.37683315158807
+          },
+          "nodeIndex": "dim_product",
+          "nodeLineageTag": "1ffd0282-d207-467e-80bd-792bca3dc508",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 164.66685597429534,
+            "y": 478.36673322600393
+          },
+          "nodeIndex": "dim_segment",
+          "nodeLineageTag": "9fc0ee58-0a2c-4e14-961a-46db511a63c8",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 258.083025392904,
+            "y": 128.16950030191822
+          },
+          "nodeIndex": "fact_finance",
+          "nodeLineageTag": "6d5581a6-d05c-4eff-b68f-6f5808afeb68",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1010.2900717221919,
+            "y": 228.18336661300197
+          },
+          "nodeIndex": "Finance Metrics",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1244.2900717221919,
+            "y": 252.18336661300197
+          },
+          "nodeIndex": "BAR CHART TOTAL SALES VIEW",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1712.2900717221919,
+            "y": 228.18336661300197
+          },
+          "nodeIndex": "PnL Steps",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1946.2900717221919,
+            "y": 276.18336661300197
+          },
+          "nodeIndex": "LastRefresh",
+          "nodeLineageTag": "2a6f52f0-50fe-4a70-8b83-85877cdb71bb",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2180.2900717221919,
+            "y": 216.18336661300197
+          },
+          "nodeIndex": "Margin Target",
+          "nodeLineageTag": "0a75b39c-70ee-436d-b1bc-3905edbcf1ee",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2414.2900717221919,
+            "y": 252.18336661300197
+          },
+          "nodeIndex": "Pareto Axis",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2882.2900717221919,
+            "y": 252.18336661300197
+          },
+          "nodeIndex": "KPIs",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3116.2900717221919,
+            "y": 228.18336661300197
+          },
+          "nodeIndex": "Pareto Class",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2648.2900717221919,
+            "y": 264.18336661300197
+          },
+          "nodeIndex": "FILTER",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 26.635441684509924,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

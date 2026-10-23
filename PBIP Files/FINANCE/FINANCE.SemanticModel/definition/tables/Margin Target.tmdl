@@ -1,0 +1,26 @@
+table 'Margin Target'
+	lineageTag: 0a75b39c-70ee-436d-b1bc-3905edbcf1ee
+
+	measure 'Margin Target Value' = SELECTEDVALUE('Margin Target'[Margin Target])
+		formatString: 0%;-0%;0%
+		lineageTag: 53dff2c7-0099-431c-aa2a-e63d997edaed
+
+	column 'Margin Target'
+		formatString: 0%;-0%;0%
+		lineageTag: 7105d67a-1c6d-40e4-a7c9-84f5152efe4d
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition 'Margin Target' = calculated
+		mode: import
+		source = GENERATESERIES(0.05, 0.30, 0.01)
+
+	annotation PBI_Id = 1e31a108da45428091b001c10a115c45
+

@@ -1,0 +1,49 @@
+table 'BAR CHART TOTAL SALES VIEW'
+	lineageTag: 896e088e-55f9-444f-b114-b06ab9b4bc53
+
+	column 'BAR CHART VIEW'
+		lineageTag: 484d9c55-5c7d-4d46-a9d7-b232e76dc75b
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'BAR CHART VIEW Order'
+
+		relatedColumnDetails
+			groupByColumn: 'BAR CHART VIEW Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'BAR CHART VIEW Fields'
+		isHidden
+		lineageTag: 18a35c71-1df7-47de-ac2c-e26d847aadfd
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'BAR CHART VIEW Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'BAR CHART VIEW Order'
+		isHidden
+		formatString: 0
+		lineageTag: f516a681-24ee-48f0-8b8d-fe6e6d87220d
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'BAR CHART TOTAL SALES VIEW' = calculated
+		mode: import
+		source =
+				{
+				    ("Segment", NAMEOF('dim_segment'[Segment]), 0),
+				    ("Country", NAMEOF('dim_country'[Country]), 1),
+				    ("Product", NAMEOF('dim_product'[Product]), 2)
+				}
+
+	annotation PBI_Id = badbdd961acf4808b80ffad6130bbbd8
+
