@@ -86,4 +86,4 @@ feature/* ──PR──▶ DEV ──PR──▶ main
 
 Workspace sync: either **Fabric Git integration** (workspace connected to branch, Git folder = `/src`) or GitHub Actions deployment using a Service Principal — pick one per workspace, not both.
 
-See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) and [docs/naming-conventions.md](docs/naming-conventions.md).
+See [docs/CONTRIBUTING.md](docs/contributing.md) and [docs/naming-conventions.md](docs/naming-conventions.md).
